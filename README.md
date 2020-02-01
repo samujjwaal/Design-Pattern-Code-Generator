@@ -1,7 +1,7 @@
 # Homework 1
 ### Description: object-oriented design and implementation of a Design Pattern Code Generator.
 ### Grade: 8% + bonus up to 5% (3% for generating code in two or more languages and 2% for using Eclipse Java AST parser for generating code).
-#### You can obtain this Git repo using the command git clone git clone https://bitbucket.org/cs474_spring2020/homework1.git.
+#### You can obtain this Git repo using the command git clone git clone git@bitbucket.org:cs474_spring2020/homework1.git.
 
 ## Preliminaries
 As part of  homework assignment you will gain experience with creating and managing your Git repository, learn design patterns, create your model and the object-oriented design of a design pattern code generator, learn to create JUnit or Cucumber or FlatSpec tests, and you will create your SBT or Gradle build scripts. Doing this homework is essential for successful completion of the rest of this course, since all other homeworks and the course project will share the same features of this homework: branching, merging, committing, pushing your code into your Git repo, creating test cases and build scripts, and using various tools for diagnosing problems with your applications.
