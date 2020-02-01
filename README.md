@@ -8,19 +8,16 @@ As part of  homework assignment you will gain experience with creating and manag
 
 First things first, you must create your account at [BitBucket](https://bitbucket.org/), a Git repo management system. It is imperative that you use your UIC email account that has the extension @uic.edu. Once you create an account with your UIC address, BibBucket will assign you an academic status that allows you to create private repos. Bitbucket users with free accounts cannot create private repos, which are essential for submitting your homeworks and the course project. If you have a problem with obtaining the academic account with your UIC.EDU email address, please contact Atlassian's license and billing team and ask them to enable your academic account by filling out the [Atlassian Bitbucket academic account request form](https://www.atlassian.com/software/views/bitbucket-academic-license).
 
-
 Your instructor created a team for this class named CS474_Spring2020. Please contact your TA, [Mr. Mohammed Siddiq](msiddi56@uic.edu) using your UIC.EDU email account and he will add you to the team repo as developers, since Mr.Siddiq already has the admin privileges. Please use your emails from the class registration roster to add you to the team and you will receive an invitation from BitBucket to join the team. Since it is a large class, please use your UIC email address for communications or Piazza and avoid emails from other accounts like funnybunny1998@gmail.com. If you don't receive a response within 24 hours, please contact us via Piazza, since it may be a case that your direct emails went to the spam folder.
 
 Next, if you haven't done so, you will install [IntelliJ](https://www.jetbrains.com/student/) with your academic license, the JDK, the Scala runtime and the IntelliJ Scala plugin, the [Simple Build Toolkit (SBT)](https://www.scala-sbt.org/1.x/docs/index.html) or the [Gradle build tool](https://gradle.org/) and make sure that you can create, compile, and run Java and Scala programs. Please make sure that you can run [various Java tools from your chosen JDK](https://docs.oracle.com/en/java/javase/index.html).
 
 In this and all consecutive homeworks and in the course project you will use logging and configuration management frameworks. You will comment your code extensively and supply logging statements at different logging levels (e.g., TRACE, INFO, ERROR) to record information at some salient points in the executions of your programs. All input and configuration variables must be supplied through configuration files -- hardcoding these values in the source code is generally prohibited and will be punished by taking a large percentage of points from your total grade! You are expected to use [Logback](https://logback.qos.ch/) and [SLFL4J](https://www.slf4j.org/) for logging and [Typesafe Conguration Library](https://github.com/lightbend/config) for managing configuration files. These and other libraries should be imported into your project using your script [build.sbt](https://www.scala-sbt.org/1.0/docs/Basic-Def-Examples.html) or [gradle script](https://docs.gradle.org/current/userguide/writing_build_scripts.html). These libraries and frameworks are widely used in the industry, so learning them is the time well spent to improve your resumes.
 
-Even though you can generate the resulting design pattern implementations in Java, you can also add support for other languages like Scala and Go and C++ for which you will receive an additional bonus of up to 3%. You will be expected to learn Scala as you go and after the midterm we will use Scala for assignments and all other course materials. As you see from the StackOverflow survey, knowledge of Scala is highly paid and in great demand, and it is expected that you pick it relatively fast, especially since it is tightly integrated with Java. I recommend using the book on Programming in Scala: Updated for Scala 2.12 published on May 10, 2016 by Martin Odersky and Lex Spoon. You can obtain this book using the academic subscription on Safari Books Online. There are many other books and resources available on the Internet to learn Scala. Those who know more about functional programming can use the book on Functional Programming in Scala published on Sep 14, 2014 by Paul Chiusano and Runar Bjarnason.
-
-To receive your bonus for writing your implementation in Scala, you should avoid using **var**s and while/for loops that iterate over collections using [induction variables](https://en.wikipedia.org/wiki/Induction_variable). Instead, you should learn to use collection methods **map**, **flatMap**, **foreach**, **filter** and many others with lambda functions, which make your code linear and easy to understand. Also, avoid mutable variables at all cost. Points will be deducted for having many **var**s and inductive variable loops without explanation why mutation is needed in your code - you can always do without it.
-
 ## Overview
-In this homework, you will create an object-oriented design and implementation of a program that generates the implementation code of the design patterns. This homework combines two separate topics: design patterns for object-oriented programming and using object-oriented facilities of Java to realize your model of the design pattern program generator. That is, you will determine what program entities (e.g., classes and their methods) are needed as well as specific constraints on the implementation of these program entities (e.g., inheritance among classes or method calls in a certain sequence) for each design pattern. Next, you will create a model for a program generator with explicitely defined abstractions, translate your abstractions into design, refine your abstractions and explain the decomposition of your design into modules (e.g., packages, classes, interfaces, inner and anonymous classes). Finally, you will create a verifier that will use the annotation processing API and Java reflection package to determine if a design pattern is used correctly.
+In this homework, you will create an object-oriented design and implementation of a program that generates the implementation code of the design patterns. This homework combines two separate topics: design patterns for object-oriented programming and using object-oriented facilities of Java to realize your model of the design pattern program generator. That is, you will determine what program entities (e.g., classes and their methods) are needed as well as specific constraints on the implementation of these program entities (e.g., inheritance among classes or method calls in a certain sequence) for each design pattern. Next, you will create a model for a program generator with explicitely defined abstractions, translate your abstractions into design, refine your abstractions and explain the decomposition of your design into modules (e.g., packages, classes, interfaces, inner and anonymous classes). Finally, you will create a generator that emits the implementation of the chosen design pattern in a target language. This part can be accomplished by treating the resulting code as a record, i.e., where you manipulate the resulting Java program as a set of key/value strings. 
+
+Even though you can generate the resulting design pattern implementations in Java, you can also add support for other languages like Scala and Go and C++ for which you will receive an additional bonus of up to 3%. In addition, a bonus worth 1% will be given if you if you choose to use Java reflection package to construct the generated code or a bonus of 3% will be given to you if you use the [Eclipse Java parser](https://www.vogella.com/tutorials/EclipseJDT/article.html). Those who implement the code generation using both options will receive an additional bonus worth  4%.
 
 
 This homework script is written using a retroscripting technique, in which the homework outlines are generally and loosely drawn, and the individual students improvise to create the implementation that fits their refined objectives. In doing so, students are expected to stay within the basic requirements of the homework and they are free to experiments. That is, it is impossible that two non-collaborating students will submit similar homeworks! Asking questions is important, **so please ask away on Piazza!**
@@ -47,28 +44,29 @@ public class #$$CS474_Template$$# {
 ```
 
 From the lectures we already learned a few patterns in the context of using OO polymorphism. In your DePaCoG you will implement the generation of the code for the following design patterns from the GoF book on Design Patterns: Elements of Reusable Object-Oriented Software published in 1994. You do not need to buy this book, [it is available for free](https://w3sdesign.com/GoF_Design_Patterns_Reference0100.pdf).
-- Abstract factory groups object factories that have a common theme.
-- Builder constructs complex objects by separating construction and representation.
-- Factory method creates objects without specifying the exact class to create.
-- Prototype creates objects by cloning an existing object.
-- Adapter allows classes with incompatible interfaces to work together by wrapping its own interface around that of an already existing class.
-- Bridge decouples an abstraction from its implementation so that the two can vary independently.
-- Composite composes zero-or-more similar objects so that they can be manipulated as one object.
-- Decorator dynamically adds/overrides behaviour in an existing method of an object.
-- Facade provides a simplified interface to a large body of code.
-- Flyweight reduces the cost of creating and manipulating a large number of similar objects.
-- Proxy provides a placeholder for another object to control access, reduce cost, and reduce complexity.
-- Chain of responsibility delegates commands to a chain of processing objects.
-- Command creates objects which encapsulate actions and parameters.
-- Interpreter implements a specialized language.
-- Iterator accesses the elements of an object sequentially without exposing its underlying representation.
-- Mediator allows loose coupling between classes by being the only class that has detailed knowledge of their methods.
-- Memento provides the ability to restore an object to its previous state (undo).
-- Observer is a publish/subscribe pattern which allows a number of observer objects to see an event.
-- State allows an object to alter its behavior when its internal state changes.
-- Strategy allows one of a family of algorithms to be selected on-the-fly at runtime.
-- Template method defines the skeleton of an algorithm as an abstract class, allowing its subclasses to provide concrete behavior.
-- Visitor separates an algorithm from an object structure by moving the hierarchy of methods into one object.
+
+* Abstract factory groups object factories that have a common theme.
+* Builder constructs complex objects by separating construction and representation.
+* Factory method creates objects without specifying the exact class to create.
+* Prototype creates objects by cloning an existing object.
+* Adapter allows classes with incompatible interfaces to work together by wrapping its own interface around that of an already existing class.
+* Bridge decouples an abstraction from its implementation so that the two can vary independently.
+* Composite composes zero-or-more similar objects so that they can be manipulated as one object.
+* Decorator dynamically adds/overrides behaviour in an existing method of an object.
+* Facade provides a simplified interface to a large body of code.
+* Flyweight reduces the cost of creating and manipulating a large number of similar objects.
+* Proxy provides a placeholder for another object to control access, reduce cost, and reduce complexity.
+* Chain of responsibility delegates commands to a chain of processing objects.
+* Command creates objects which encapsulate actions and parameters.
+* Interpreter implements a specialized language.
+* Iterator accesses the elements of an object sequentially without exposing its underlying representation.
+* Mediator allows loose coupling between classes by being the only class that has detailed knowledge of their methods.
+* Memento provides the ability to restore an object to its previous state (undo).
+* Observer is a publish/subscribe pattern which allows a number of observer objects to see an event.
+* State allows an object to alter its behavior when its internal state changes.
+* Strategy allows one of a family of algorithms to be selected on-the-fly at runtime.
+* Template method defines the skeleton of an algorithm as an abstract class, allowing its subclasses to provide concrete behavior.
+* Visitor separates an algorithm from an object structure by moving the hierarchy of methods into one object.
 
 Your DePaCog will itself be based on the number of design patterns, most likely, the abstract factory, the builder, the composite, the facade, and the template method. Not only this homework will force you to learn these patterns, but also you will learn how to use them to implement DePaCog and how to implement these patterns in more than one language to receive your bonus points.
 
@@ -95,7 +93,7 @@ Sunday, February 23 at 10PM CST via the bitbucket repository. Your submission wi
 
 
 ## Evaluation criteria
-- the maximum grade for this homework is 8% with the bonus up to 5%. Points are subtracted from this maximum grade: for example, saying that 2% is lost if some requirement is not completed means that the resulting grade will be 8%-2% => 6%; if the core homework functionality does not work, no bonus points will be given;
+- the maximum grade for this homework is 8% with the bonus described above. Points are subtracted from this maximum grade: for example, saying that 2% is lost if some requirement is not completed means that the resulting grade will be 8%-2% => 6%; if the core homework functionality does not work, no bonus points will be given;
 - only some POJO classes are created and nothing else is done: up to 7% lost;
 - having less than five unit and/or integration tests: up to 5% lost;
 - missing comments and explanations from the submitted program: up to 5% lost;
