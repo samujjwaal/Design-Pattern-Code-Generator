@@ -54,6 +54,8 @@ Undegraduate students are expected to implement the following core design patter
 * Chain of responsibility delegates commands to a chain of processing objects.
 * Mediator allows loose coupling between classes by being the only class that has detailed knowledge of their methods.
 * Visitor separates an algorithm from an object structure by moving the hierarchy of methods into one object.
+* Template method defines the skeleton of an algorithm as an abstract class, allowing its subclasses to provide concrete behavior.
+
 
 Graduate students must implement the same design patterns as the undergraduate students in addition to the following design patterns:
 
@@ -71,7 +73,6 @@ Graduate students must implement the same design patterns as the undergraduate s
 * Observer is a publish/subscribe pattern which allows a number of observer objects to see an event.
 * State allows an object to alter its behavior when its internal state changes.
 * Strategy allows one of a family of algorithms to be selected on-the-fly at runtime.
-* Template method defines the skeleton of an algorithm as an abstract class, allowing its subclasses to provide concrete behavior.
 
 Your DePaCog will itself be based on the number of design patterns, most likely, the abstract factory, the builder, the composite, the facade, and the template method. Not only this homework will force you to learn these patterns, but also you will learn how to use them to implement DePaCog and how to implement these patterns in more than one language to receive your bonus points.
 
