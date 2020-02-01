@@ -56,6 +56,7 @@ Undegraduate students are expected to implement the following core design patter
 * Visitor separates an algorithm from an object structure by moving the hierarchy of methods into one object.
 
 Graduate students must implement the same design patterns as the undergraduate students in addition to the following design patterns:
+
 * Prototype creates objects by cloning an existing object.
 * Adapter allows classes with incompatible interfaces to work together by wrapping its own interface around that of an already existing class.
 * Bridge decouples an abstraction from its implementation so that the two can vary independently.
