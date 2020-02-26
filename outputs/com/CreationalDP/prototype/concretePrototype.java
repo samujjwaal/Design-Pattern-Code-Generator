@@ -1,6 +1,9 @@
 package com.CreationalDP.prototype;
 
-public class concretePrototype extends Prototype {
+/**
+ * Declares interface to copy it self.
+ */
+public class ConcretePrototype extends Prototype {
   public Prototype copyMe() throws CloneNotSupportedException {
     return (Prototype) this.clone();
   }

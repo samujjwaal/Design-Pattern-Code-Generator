@@ -1,14 +1,16 @@
 package com.CreationalDP.prototype;
 
-public class Client {
+/**
+ * Creates a new object by asking a Prototype to clone itself
+ */
+public class Client extends Prototype {
   private Prototype prototype;
 
   public Client(Prototype prototype) {
     this.prototype = prototype;
   }
 
-  public static void main(String[] args) {
-    Prototype prototype = new Prototype;
-    Prototype prototypeCopy =  prototype.copyMe();
+  public Prototype operation() throws CloneNotSupportedException {
+    return prototype.copyMe();
   }
 }
