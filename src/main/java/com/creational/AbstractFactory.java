@@ -5,8 +5,13 @@ import com.squareup.javapoet.*;
 import javax.lang.model.element.Modifier;
 import java.io.IOException;
 import com.DesignPattern;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class AbstractFactory implements DesignPattern {
+
+    //Define a static logger variable so that it references the Logger instance
+    private static final Logger logger = LoggerFactory.getLogger(AbstractFactory.class);
 
     String[] defaultClasses = {"AbstractProductA","ProductA1","ProductA2","AbstractProductB","ProductB1","ProductB2",
             "AbstractFactory","ConcreteFactory1","ConcreteFactory2"};
@@ -14,11 +19,14 @@ public class AbstractFactory implements DesignPattern {
     JavaFile[] generatedCode = new JavaFile[defaultClasses.length];
 
     public AbstractFactory()throws IOException {
+        logger.info("Executing AbstractFactory()");
         createDesignPattern(defaultClasses,packageName);
     }
 
     @Override
     public JavaFile[] generateCode(String[] classes, String packageName){
+        logger.info("Executing generateCode()");
+
         int i = 0;
 //        AbstractProductA interface declaration
         ClassName AbstractProductA = ClassName.get("",classes[i]);
@@ -151,6 +159,8 @@ public class AbstractFactory implements DesignPattern {
         generatedCode[i] = JavaFile.builder(packageName,concFactory2)
                 .skipJavaLangImports(true)
                 .build();
+
+        logger.info("Returning generated java code to be written in files");
 
         return generatedCode;
     }

@@ -4,19 +4,28 @@ import com.squareup.javapoet.*;
 import javax.lang.model.element.Modifier;
 import java.io.IOException;
 import com.DesignPattern;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class Bridge implements DesignPattern {
+
+    //Define a static logger variable so that it references the Logger instance
+    private static final Logger logger = LoggerFactory.getLogger(Bridge.class);
+
 
     String[] defaultClasses = {"Implementor", "ConcreteImplementorA","ConcreteImplementorB","Abstraction","RefinedAbstraction"};
     String packageName = "com.StructuralDP.bridge";
     JavaFile[] generatedCode = new JavaFile[defaultClasses.length];
 
     public Bridge()throws IOException{
+        logger.info("Executing Bridge()");
         createDesignPattern(defaultClasses,packageName);
     }
 
     public JavaFile[] generateCode(String[] classes, String packageName){
         int i = 0 ;
+        logger.info("Executing generateCode()");
+
 
 //        Implementor interface declaration
         ClassName Implementor = ClassName.get("",classes[i]);
@@ -96,6 +105,8 @@ public class Bridge implements DesignPattern {
                         .build())
                 .build();
         generatedCode[i] = JavaFile.builder(packageName,refAbstraction).skipJavaLangImports(true).build();
+
+        logger.info("Returning generated java code to be written in files");
 
         return generatedCode;
     }

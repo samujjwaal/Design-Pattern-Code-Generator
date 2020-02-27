@@ -5,18 +5,26 @@ import com.squareup.javapoet.*;
 import javax.lang.model.element.Modifier;
 import java.io.IOException;
 import com.DesignPattern;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class Strategy implements DesignPattern {
+
+    //Define a static logger variable so that it references the Logger instance
+    private static final Logger logger = LoggerFactory.getLogger(Strategy.class);
+
 
     String[] defaultClasses = {"Strategy", "Context","ConcreteStrategyA","ConcreteStrategyB","ConcreteStrategyC"};
     String packageName = "com.BehavioralDP.strategy";
     JavaFile[] generatedCode = new JavaFile[defaultClasses.length];
 
     public Strategy()throws IOException{
+        logger.info("Executing Strategy()");
         createDesignPattern(defaultClasses,packageName);
     }
 
     public JavaFile[] generateCode(String[] classes, String packageName){
+        logger.info("Executing generateCode()");
 
         int i = 0;
 
@@ -28,9 +36,8 @@ public class Strategy implements DesignPattern {
                 .build();
         TypeSpec strategy = TypeSpec.interfaceBuilder(Strategy)
                 .addModifiers(Modifier.PUBLIC)
-                .addJavadoc("""
-                Declares an interface common to all supported algorithms. Context uses this interface to call the algorithm
-                defined by a ConcreteStrategy.""")
+                .addJavadoc("Declares an interface common to all supported algorithms. Context uses this interface to call the algorithm\n" +
+                            "defined by a ConcreteStrategy.")
                 .addMethod(algoInterface)
                 .build();
         generatedCode[i] = JavaFile.builder(packageName,strategy)
@@ -109,6 +116,8 @@ public class Strategy implements DesignPattern {
         generatedCode[i] = JavaFile.builder(packageName,concStratC)
                 .skipJavaLangImports(true)
                 .build();
+
+        logger.info("Returning generated java code to be written in files");
 
         return generatedCode;
     }

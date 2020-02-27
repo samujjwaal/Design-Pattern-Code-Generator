@@ -5,19 +5,26 @@ import com.squareup.javapoet.*;
 import javax.lang.model.element.Modifier;
 import java.io.IOException;
 import com.DesignPattern;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class Composite implements DesignPattern {
+    //Define a static logger variable so that it references the Logger instance
+    private static final Logger logger = LoggerFactory.getLogger(Composite.class);
+
 
     String[] defaultClasses = {"Component", "Composite"};
     String packageName = "com.StructuralDP.composite";
     JavaFile[] generatedCode = new JavaFile[defaultClasses.length];
 
     public Composite()throws IOException{
+        logger.info("Executing Composite()");
         createDesignPattern(defaultClasses,packageName);
     }
 
     public JavaFile[] generateCode(String[] classes, String packageName){
 
+        logger.info("Executing generateCode()");
         int i = 0;
 
 //        Component interface declaration
@@ -49,9 +56,8 @@ public class Composite implements DesignPattern {
         TypeSpec composite =  TypeSpec.classBuilder(Composite)
                 .superclass(Component)
                 .addModifiers(Modifier.PUBLIC)
-                .addJavadoc("""
-                        Composite class defines behavior for components having children, stores child
-                        components, implements child-related operations in the Component interface""")
+                .addJavadoc("Composite class defines behavior for components having children, stores child\n" +
+                            "components, implements child-related operations in the Component interface")
                 .addField(child)
                 .addMethod(MethodSpec.methodBuilder(oper.name)
                         .addModifiers(Modifier.PUBLIC).returns(TypeName.VOID)
@@ -78,6 +84,8 @@ public class Composite implements DesignPattern {
         generatedCode[i] = JavaFile.builder(packageName,composite)
                 .skipJavaLangImports(true)
                 .build();
+
+        logger.info("Returning generated java code to be written in files");
 
         return generatedCode;
 

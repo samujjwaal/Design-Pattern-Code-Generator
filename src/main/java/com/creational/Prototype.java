@@ -4,8 +4,13 @@ import com.squareup.javapoet.*;
 import javax.lang.model.element.Modifier;
 import java.io.IOException;
 import com.DesignPattern;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class Prototype implements DesignPattern {
+
+    //Define a static logger variable so that it references the Logger instance
+    private static final Logger logger = LoggerFactory.getLogger(Prototype.class);
 
     String[] defaultClasses = {"Prototype","ConcretePrototype","Client"};
     String packageName = "com.CreationalDP.prototype";
@@ -24,10 +29,9 @@ public class Prototype implements DesignPattern {
         MethodSpec copyMe = MethodSpec.methodBuilder("copyMe")
                 .addModifiers(Modifier.ABSTRACT)
                 .addException(CloneNotSupportedException.class)
-                .addJavadoc("""
-                        Copy method.
-                        @return copy of the object
-                        @throws CloneNotSupportedException exception""")
+                .addJavadoc("Copy method.\n" +
+                            "@return copy of the object\n" +
+                            "@throws CloneNotSupportedException exception")
                 .returns(Prototype)
                 .build();
         TypeSpec prototype = TypeSpec.classBuilder(Prototype)

@@ -5,19 +5,28 @@ import com.squareup.javapoet.*;
 import javax.lang.model.element.Modifier;
 import java.io.IOException;
 import com.DesignPattern;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class FactoryMethod implements DesignPattern {
+
+    //Define a static logger variable so that it references the Logger instance
+    private static final Logger logger = LoggerFactory.getLogger(FactoryMethod.class);
 
     String[] defaultClasses = {"Product","Factory","ConcreteProductA","ConcreteProductB","ConcreteFactory"};
     String packageName = "com.CreationalDP.factoryMethod";
     JavaFile[] generatedCode = new JavaFile[defaultClasses.length];
 
     public FactoryMethod()throws IOException {
+        logger.info("Executing FactoryMethod()");
+
         createDesignPattern(defaultClasses,packageName);
     }
 
     @Override
     public JavaFile[] generateCode(String[] classes, String packageName){
+        logger.info("Executing generateCode()");
+
         int i = 0;
 //        Product interface declaration
         ClassName Product = ClassName.get("",classes[i]);
@@ -86,6 +95,8 @@ public class FactoryMethod implements DesignPattern {
         generatedCode[i] = JavaFile.builder(packageName,concFactory)
                 .skipJavaLangImports(true)
                 .build();
+
+        logger.info("Returning generated java code to be written in files");
 
         return generatedCode;
     }

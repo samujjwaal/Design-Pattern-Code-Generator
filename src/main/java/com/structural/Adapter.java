@@ -5,20 +5,30 @@ import com.squareup.javapoet.*;
 import javax.lang.model.element.Modifier;
 import java.io.IOException;
 import com.DesignPattern;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class Adapter implements DesignPattern {
+
+    //Define a static logger variable so that it references the Logger instance
+    private static final Logger logger = LoggerFactory.getLogger(Adapter.class);
+
 
     String[] defaultClasses = {"Target", "Adaptee","Adapter"};
     String packageName = "com.StructuralDP.adapter";
     JavaFile[] generatedCode = new JavaFile[defaultClasses.length];
 
+
     public Adapter()throws IOException{
+        logger.info("Executing Adapter()");
         createDesignPattern(defaultClasses,packageName);
     }
 
     public JavaFile[] generateCode(String[] classes, String packageName){
 
         int i = 0;
+        logger.info("Executing generateCode()");
+
 
 //      Target interface declaration
         ClassName Target = ClassName.get("",classes[i]);
@@ -70,6 +80,8 @@ public class Adapter implements DesignPattern {
         generatedCode[i] = JavaFile.builder(packageName,adapter)
                 .skipJavaLangImports(true)
                 .build();
+
+        logger.info("Returning generated java code to be written in files");
 
         return generatedCode;
 

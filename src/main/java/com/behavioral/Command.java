@@ -3,20 +3,27 @@ package com.behavioral;
 import com.squareup.javapoet.*;
 import java.io.IOException;
 import com.DesignPattern;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.lang.model.element.Modifier;
 
 public class Command implements DesignPattern {
+    //Define a static logger variable so that it references the Logger instance
+    private static final Logger logger = LoggerFactory.getLogger(Command.class);
+
 
     String[] defaultClasses = {"Command", "Invoker","Receiver","ConcreteCommand"};
     String packageName = "com.BehavioralDP.command";
     JavaFile[] generatedCode = new JavaFile[defaultClasses.length];
 
     public Command()throws IOException{
+        logger.info("Executing Command()");
         createDesignPattern(defaultClasses,packageName);
     }
 
     public JavaFile[] generateCode(String[] classes, String packageName){
+        logger.info("Executing generateCode()");
 
         int i = 0;
 
@@ -28,8 +35,7 @@ public class Command implements DesignPattern {
                 .build();
         TypeSpec command = TypeSpec.interfaceBuilder(Command)
                 .addModifiers(Modifier.PUBLIC)
-                .addJavadoc("""
-                        Command interface, declares an interface for executing an operation""")
+                .addJavadoc("Command interface, declares an interface for executing an operation")
                 .addMethod(execute)
                 .build();
         generatedCode[i] = JavaFile.builder(packageName,command)
@@ -41,8 +47,7 @@ public class Command implements DesignPattern {
         ClassName Invoker = ClassName.get("",classes[i]);
         TypeSpec invoker = TypeSpec.classBuilder(Invoker)
                 .addModifiers(Modifier.PUBLIC)
-                .addJavadoc("""
-                        Invoker class, asks the command to carry out the request""")
+                .addJavadoc("Invoker class, asks the command to carry out the request")
                 .addField(Command, "command", Modifier.PRIVATE)
                 .addMethod(MethodSpec.constructorBuilder()
                         .addModifiers(Modifier.PUBLIC)
@@ -68,9 +73,8 @@ public class Command implements DesignPattern {
                 .build();
         TypeSpec receiver = TypeSpec.classBuilder(Receiver)
                 .addModifiers(Modifier.PUBLIC)
-                .addJavadoc("""
-                        Receiver class, knows how to perform the operations associated with carrying
-                        out a request""")
+                .addJavadoc("Receiver class, knows how to perform the operations associated with carrying\n" +
+                            "out a request")
                 .addField(opPerf)
                 .addMethod(MethodSpec.methodBuilder("action")
                         .addModifiers(Modifier.PUBLIC)
@@ -93,9 +97,8 @@ public class Command implements DesignPattern {
         TypeSpec concreteCommand = TypeSpec.classBuilder(ConcreteCommand)
                 .addSuperinterface(Command)
                 .addModifiers(Modifier.PUBLIC)
-                .addJavadoc("""
-                        ConcreteCommand class, defines a binding between a Receiver object and an
-                        operation""")
+                .addJavadoc("ConcreteCommand class, defines a binding between a Receiver object and an\n" +
+                            "operation")
                 .addField(Receiver, "receiver",Modifier.PRIVATE)
                 .addMethod(MethodSpec.constructorBuilder()
                         .addModifiers(Modifier.PUBLIC)
@@ -111,6 +114,8 @@ public class Command implements DesignPattern {
         generatedCode[i] = JavaFile.builder(packageName,concreteCommand)
                 .skipJavaLangImports(true)
                 .build();
+
+        logger.info("Returning generated java code to be written in files");
 
         return generatedCode;
     }

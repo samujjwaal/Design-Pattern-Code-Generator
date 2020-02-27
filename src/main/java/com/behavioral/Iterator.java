@@ -5,19 +5,27 @@ import com.squareup.javapoet.*;
 import javax.lang.model.element.Modifier;
 import java.io.IOException;
 import com.DesignPattern;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 public class Iterator implements DesignPattern {
+    //Define a static logger variable so that it references the Logger instance
+    private static final Logger logger = LoggerFactory.getLogger(Iterator.class);
+
 
     String[] defaultClasses = {"Iterator", "Aggregate","ConcreteAggregate","ConcreteIterator"};
     String packageName = "com.BehavioralDP.iterator";
     JavaFile[] generatedCode = new JavaFile[defaultClasses.length];
 
     public Iterator()throws IOException{
+        logger.info("Executing Iterator()");
+
         createDesignPattern(defaultClasses,packageName);
     }
 
     public JavaFile[] generateCode(String[] classes, String packageName){
+        logger.info("Executing generateCode()");
 
 //        Observer interface declaration
         ClassName Iterator = ClassName.get("",classes[0]);
@@ -126,6 +134,8 @@ public class Iterator implements DesignPattern {
                 .build();
         generatedCode[3] = JavaFile.builder(packageName,concreteIterator)
                 .skipJavaLangImports(true).build();
+
+        logger.info("Returning generated java code to be written in files");
 
         return generatedCode;
     }

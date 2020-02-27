@@ -5,18 +5,25 @@ import com.squareup.javapoet.*;
 import javax.lang.model.element.Modifier;
 import java.io.IOException;
 import com.DesignPattern;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class Interpreter implements DesignPattern {
+    //Define a static logger variable so that it references the Logger instance
+    private static final Logger logger = LoggerFactory.getLogger(Interpreter.class);
+
 
     String[] defaultClasses = {"Context", "AbstractExpression","OrExpression","AndExpression","TerminalExpression"};
     String packageName = "com.BehavioralDP.interpreter";
     JavaFile[] generatedCode = new JavaFile[defaultClasses.length];
 
     public Interpreter()throws IOException{
+        logger.info("Executing Interpreter()");
         createDesignPattern(defaultClasses,packageName);
     }
 
     public JavaFile[] generateCode(String[] classes, String packageName){
+        logger.info("Executing generateCode()");
 
         int i = 0;
 
@@ -163,6 +170,7 @@ public class Interpreter implements DesignPattern {
                 .build();
         generatedCode[i] = JavaFile.builder(packageName,termExp).skipJavaLangImports(true).build();
 
+        logger.info("Returning generated java code to be written in files");
 
         return generatedCode;
     }

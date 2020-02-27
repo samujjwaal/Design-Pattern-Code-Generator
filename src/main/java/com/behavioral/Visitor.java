@@ -4,8 +4,14 @@ import com.squareup.javapoet.*;
 import javax.lang.model.element.Modifier;
 import java.io.IOException;
 import com.DesignPattern;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class Visitor implements DesignPattern {
+
+    //Define a static logger variable so that it references the Logger instance
+    private static final Logger logger = LoggerFactory.getLogger(Visitor.class);
+
 
     String[] defaultClasses = {"Element","ConcreteElementA","ConcreteElementB","Visitor","ConcreteVisitor1",
     "ConcreteVisitor2", "ObjectStructure"};
@@ -13,10 +19,12 @@ public class Visitor implements DesignPattern {
     JavaFile[] generatedCode = new JavaFile[defaultClasses.length];
 
     public Visitor()throws IOException{
+        logger.info("Executing Visitor()");
         createDesignPattern(defaultClasses,packageName);
     }
 
     public JavaFile[] generateCode(String[] classes, String packageName){
+        logger.info("Executing generateCode()");
 
         ClassName Element =  ClassName.get("",classes[0]);
         ClassName ConcreteElementA =  ClassName.get("",classes[1]);
@@ -189,6 +197,8 @@ public class Visitor implements DesignPattern {
                 .build();
         generatedCode[i] = JavaFile.builder(packageName,objStruct)
                 .skipJavaLangImports(true).build();
+
+        logger.info("Returning generated java code to be written in files");
 
         return generatedCode;
 

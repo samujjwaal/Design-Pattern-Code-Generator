@@ -5,18 +5,25 @@ import com.squareup.javapoet.*;
 import javax.lang.model.element.Modifier;
 import java.io.IOException;
 import com.DesignPattern;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class Proxy implements DesignPattern {
+
+    //Define a static logger variable so that it references the Logger instance
+    private static final Logger logger = LoggerFactory.getLogger(Proxy.class);
 
     String[] defaultClasses = {"Subject", "RealSubject","Proxy"};
     String packageName = "com.StructuralDP.proxy";
     JavaFile[] generatedCode = new JavaFile[defaultClasses.length];
 
     public Proxy()throws IOException{
+        logger.info("Executing Proxy()");
         createDesignPattern(defaultClasses,packageName);
     }
 
     public JavaFile[] generateCode(String[] classes, String packageName){
+        logger.info("Executing generateCode()");
 
         int i = 0;
 
@@ -56,12 +63,10 @@ public class Proxy implements DesignPattern {
         TypeSpec proxy =  TypeSpec.classBuilder(Proxy)
                 .addModifiers(Modifier.PUBLIC)
                 .addSuperinterface(Subject)
-                .addJavadoc("""
-                        Proxy class keep reference on a real subject, define interface which
-                        represents Subject, so he can: - act as a surrogate - control access to real
-                        subject - can be responsible for creation and maintenance of the real
-                        subject
-                        """)
+                .addJavadoc("Proxy class keep reference on a real subject, define interface which\n" +
+                            "represents Subject, so he can: - act as a surrogate - control access to real\n" +
+                            "subject - can be responsible for creation and maintenance of the real\n" +
+                            "subject\n")
                 .addField(RealSubject, "realSubject",Modifier.PRIVATE)
                 .addMethod(MethodSpec.methodBuilder(doOp.name)
                         .addModifiers(Modifier.PUBLIC)
@@ -77,6 +82,8 @@ public class Proxy implements DesignPattern {
         generatedCode[i] = JavaFile.builder(packageName,proxy)
                 .skipJavaLangImports(true)
                 .build();
+
+        logger.info("Returning generated java code to be written in files");
 
         return generatedCode;
 

@@ -1,12 +1,19 @@
 package com;
 
 import com.squareup.javapoet.JavaFile;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public interface DesignPattern {
+
+    //Define a static logger variable so that it references the Logger instance
+    static final Logger logger = LoggerFactory.getLogger(DesignPattern.class);
+
 
     default void displayClassNames(String[] classes){
 
@@ -16,6 +23,7 @@ public interface DesignPattern {
     }
 
     default String[] setClassNames(String[] oldClasses){
+
         Scanner sc = new Scanner(System.in);
         int n = oldClasses.length;
         String[] newClasses = new String[n];
@@ -27,28 +35,32 @@ public interface DesignPattern {
                 for (int i = 0; i< n; i++) {
                     boolean check;
                     do {
-                        System.out.print("Enter class name for "+ oldClasses[i]+" :");
+                        System.out.print("\nEnter class name for "+ oldClasses[i]+" :");
                         newClasses[i] = sc.next();
-                        check = Character.isDigit(newClasses[i].toLowerCase().charAt(0));
-                        if(check){
-                            System.out.println("\nInvalid class name! Class name can't start with a digit.");
-                            System.out.print("Enter the class name again.");
+                        check = Character.isAlphabetic(newClasses[i].toLowerCase().charAt(0));
+                        logger.info("Checking if classname entered is valid");
+                        if(!check){
+                            logger.error("Invalid classname");
+                            System.out.println("\nInvalid class name! Class name must start with a letter.");
+                            System.out.print("Enter the class name again.\n");
                         }
-                    }while (check);
+                    }while (!check);
                 }
             }else if (c == 'n'){
                 newClasses = oldClasses;
             }
             else {
+                logger.error("Invalid input");
                 System.out.print("\nInvalid choice! Enter only y/n. Please try again.");
             }
 
         }while(c != 'y'&& c!='n');
-
+        logger.info("Returning classnames to createDesignPattern()");
         return newClasses;
     }
 
     default String setPackageName(String defaultPckgName){
+
         Scanner sc = new Scanner(System.in);
         String pckgName = null;
         System.out.print("\nDo you want custom package name for generated design pattern java files(y/n) ? ");
@@ -58,16 +70,17 @@ public interface DesignPattern {
             if (c == 'y'){
                 System.out.print("\nPlease enter the package name:");
                 pckgName = sc.next();
+                System.out.println("\n");
             } else if (c == 'n'){
                 pckgName = defaultPckgName;
-
             }
             else {
+                logger.error("Invalid input");
                 System.out.print("\nInvalid choice! Enter only y/n. Please try again.");
             }
 
         }while(c != 'y'&& c!='n');
-
+        logger.info("Returning package name to createDesignPattern()");
         return pckgName;
     }
 
@@ -75,23 +88,31 @@ public interface DesignPattern {
 
     default void writeJavaFiles(JavaFile[] files) throws IOException {
         for(JavaFile file : files){
-            System.out.println(file);
+//            System.out.println(file);
             file.writeTo(new File("outputs"));
         }
     }
 
     default void createDesignPattern(String[] oldClasses, String oldPackageName) throws IOException {
-        System.out.println("The Design pattern will contain following classes:");
+        logger.info("Entering createDesignPattern()");
+
+        System.out.println("\nThe Design pattern will contain following classes:");
         displayClassNames(oldClasses);
         String[] newClasses = setClassNames(oldClasses);
-//        System.out.println(newClasses[0]);
         String pckgName = setPackageName(oldPackageName);
+
+        logger.info("Generating java code using JavaPoet");
         JavaFile[] code = generateCode(newClasses,pckgName);
-//        System.out.println(code[0]);
+
+        logger.info("Writing java code into output files");
         writeJavaFiles(code);
-        System.out.println("The following java files have been created:");
+        System.out.println("\nThe following java files have been created:");
         displayClassNames(newClasses);
-        System.out.println("\nAt package name: " + pckgName);
+        System.out.println("\n\nAt package name: " + pckgName);
+        System.out.println("\n");
+
+        logger.info("Exiting createDesignPattern()");
+
     }
 
 

@@ -5,18 +5,26 @@ import com.squareup.javapoet.*;
 import javax.lang.model.element.Modifier;
 import java.io.IOException;
 import com.DesignPattern;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class TemplateMethod implements DesignPattern {
+
+    //Define a static logger variable so that it references the Logger instance
+    private static final Logger logger = LoggerFactory.getLogger(TemplateMethod.class);
+
 
     String[] defaultClasses = {"AbstractClass", "ConcreteClass"};
     String packageName = "com.BehavioralDP.templateMethod";
     JavaFile[] generatedCode = new JavaFile[defaultClasses.length];
 
     public TemplateMethod()throws IOException{
+        logger.info("Executing TemplateMethod()");
         createDesignPattern(defaultClasses,packageName);
     }
 
     public JavaFile[] generateCode(String[] classes, String packageName){
+        logger.info("Executing generateCode()");
 
         int i = 0;
 
@@ -38,11 +46,10 @@ public class TemplateMethod implements DesignPattern {
                 .addMethod(MethodSpec.methodBuilder("templateMethod")
                         .addModifiers(Modifier.PUBLIC)
                         .returns(String.class)
-                        .addJavadoc("""
-                                Template method, implementation of algorithm which consists of
-                                primitiveOperations
-
-                                @return result of the primitive operations""")
+                        .addJavadoc("Template method, implementation of algorithm which consists of\n" +
+                                    "primitiveOperations\n" +
+                                    "\n" +
+                                    "@return result of the primitive operations")
                         .addStatement("return this.$N() + this.$N()",primOp1.name,primOp2.name)
                         .build())
                 .addMethod(primOp1)
@@ -57,9 +64,8 @@ public class TemplateMethod implements DesignPattern {
         ClassName concreteclass = ClassName.get("",classes[i]);
         TypeSpec concreteC = TypeSpec.classBuilder(concreteclass)
                 .superclass(abstractclass)
-                .addJavadoc("""
-                        Implements the primitive operations to carry out subclass-specific steps of
-                        the algorithm.""")
+                .addJavadoc("Implements the primitive operations to carry out subclass-specific steps of\n" +
+                            "the algorithm.")
                 .addModifiers(Modifier.PUBLIC)
                 .addMethod(MethodSpec.methodBuilder(primOp1.name)
                         .addModifiers(Modifier.PUBLIC)
@@ -75,6 +81,8 @@ public class TemplateMethod implements DesignPattern {
         generatedCode[i] = JavaFile.builder(packageName,concreteC)
                 .skipJavaLangImports(true)
                 .build();
+
+        logger.info("Returning generated java code to be written in files");
 
         return generatedCode;
 

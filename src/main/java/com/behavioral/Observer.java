@@ -5,18 +5,26 @@ import com.squareup.javapoet.*;
 import javax.lang.model.element.Modifier;
 import java.io.IOException;
 import com.DesignPattern;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class Observer implements DesignPattern {
+
+    //Define a static logger variable so that it references the Logger instance
+    private static final Logger logger = LoggerFactory.getLogger(Observer.class);
+
 
     String[] defaultClasses = {"Observer", "Subject","ConcreteSubject","ConcreteObserver"};
     String packageName = "com.BehavioralDP.observer";
     JavaFile[] generatedCode = new JavaFile[defaultClasses.length];
 
     public Observer()throws IOException{
+        logger.info("Executing Observer()");
         createDesignPattern(defaultClasses,packageName);
     }
 
     public JavaFile[] generateCode(String[] classes, String packageName){
+        logger.info("Executing generateCode()");
 
         int i = 0;
 
@@ -82,9 +90,8 @@ public class Observer implements DesignPattern {
         TypeSpec concSub = TypeSpec.classBuilder(ConcreteSubject)
                 .superclass(Subject)
                 .addModifiers(Modifier.PUBLIC)
-                .addJavadoc("""
-                ConcreteSubject stores state of interest to ConcreteObserver objects, sends a notification to its observers
-                when its state changes.""")
+                .addJavadoc("ConcreteSubject stores state of interest to ConcreteObserver objects, sends a notification to its observers\n" +
+                            "when its state changes.")
                 .addField(state)
                 .addMethod(getstate)
                 .addMethod(MethodSpec.methodBuilder("setState")
@@ -105,10 +112,9 @@ public class Observer implements DesignPattern {
         TypeSpec concObs = TypeSpec.classBuilder(ConcreteObserver)
                 .addModifiers(Modifier.PUBLIC)
                 .addSuperinterface(Observer)
-                .addJavadoc("""
-                        ConcreteObserver maintains a reference to a ConcreteSubject object, stores
-                        state that should stay consistent with the subject's, implements the Observer
-                        updating interface to keep its state consistent with the subject's.""")
+                .addJavadoc("ConcreteObserver maintains a reference to a ConcreteSubject object, stores\n" +
+                            "state that should stay consistent with the subject's, implements the Observer\n" +
+                            "updating interface to keep its state consistent with the subject's.")
                 .addField(obsState)
                 .addField(subjectField)
                 .addMethod(MethodSpec.constructorBuilder()
@@ -127,6 +133,8 @@ public class Observer implements DesignPattern {
                 .build();
         generatedCode[i] = JavaFile.builder(packageName,concObs)
                 .skipJavaLangImports(true).build();
+
+        logger.info("Returning generated java code to be written in files");
 
         return generatedCode;
 

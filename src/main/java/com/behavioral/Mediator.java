@@ -5,20 +5,27 @@ import javax.lang.model.element.Modifier;
 import java.io.IOException;
 
 import com.DesignPattern;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class Mediator implements DesignPattern {
+
+    //Define a static logger variable so that it references the Logger instance
+    private static final Logger logger = LoggerFactory.getLogger(Mediator.class);
+
 
     String[] defaultClasses = {"Colleague","ConcreteColleague1","ConcreteColleague2","Mediator","ConcreteMediator"};
     String packageName = "com.BehavioralDP.mediator";
     JavaFile[] generatedCode = new JavaFile[defaultClasses.length];
 
     public Mediator()throws IOException{
+        logger.info("Executing Mediator()");
         createDesignPattern(defaultClasses,packageName);
     }
 
     public JavaFile[] generateCode(String[] classes, String packageName){
+        logger.info("Executing generateCode()");
         int i = 0;
-
         ClassName Colleague =  ClassName.get("",classes[0]);
         ClassName ConcreteColleague1 =  ClassName.get("",classes[1]);
         ClassName ConcreteColleague2 =  ClassName.get("",classes[2]);
@@ -168,6 +175,8 @@ public class Mediator implements DesignPattern {
         generatedCode[i] = JavaFile.builder(packageName,concreteMediator)
                 .skipJavaLangImports(true)
                 .build();
+
+        logger.info("Returning generated java code to be written in files");
 
         return generatedCode;
 

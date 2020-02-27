@@ -56,9 +56,8 @@ public class ChainOfResponsibility implements DesignPattern {
         TypeSpec concHandler1 = TypeSpec.classBuilder(ConcreteHandler1)
                 .superclass(Handler)
                 .addModifiers(Modifier.PUBLIC)
-                .addJavadoc("""
-                        ConcreteHandler1 class, handles the request, can access to the next object in
-                        a chain and forward the request if necessary.""")
+                .addJavadoc("ConcreteHandler1 class, handles the request, can access to the next object in " +
+                        "a chain and forward the request if necessary.")
                 .addField(handleReqInv)
                 .addMethod(MethodSpec.methodBuilder(handleReq.name)
                         .returns(TypeName.VOID)
@@ -81,9 +80,9 @@ public class ChainOfResponsibility implements DesignPattern {
         TypeSpec concHandler2 = TypeSpec.classBuilder(ConcreteHandler2)
                 .superclass(Handler)
                 .addModifiers(Modifier.PUBLIC)
-                .addJavadoc("""
-                        ConcreteHandler2 class, handles the request, can access to the next object in
-                        a chain and forward the request if necessary.""")
+                .addJavadoc("ConcreteHandler2 class, handles the request, can access to the " +
+                        "next object in a chain" +
+                        " and forward the request if necessary.")
                 .addField(handleReqInv)
                 .addMethod(MethodSpec.methodBuilder(handleReq.name)
                         .returns(TypeName.VOID)

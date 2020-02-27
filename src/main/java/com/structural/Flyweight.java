@@ -1,22 +1,30 @@
 package com.structural;
 
+
 import com.squareup.javapoet.*;
 
 import javax.lang.model.element.Modifier;
 import java.io.IOException;
 import com.DesignPattern;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class Flyweight implements DesignPattern {
+    //Define a static logger variable so that it references the Logger instance
+    private static final Logger logger = LoggerFactory.getLogger(Flyweight.class);
+
 
     String[] defaultClasses = {"Flyweight", "ConcreteFlyweight","UnsharedConcreteFlyweight","FlyweightFactory"};
     String packageName = "com.StructuralDP.flyweight";
     JavaFile[] generatedCode = new JavaFile[defaultClasses.length];
 
     public Flyweight()throws IOException{
+        logger.info("Executing Flyweight()");
         createDesignPattern(defaultClasses,packageName);
     }
 
     public JavaFile[] generateCode(String[] classes, String packageName){
+        logger.info("Executing generateCode()");
 
         int i = 0;
 
@@ -113,12 +121,11 @@ public class Flyweight implements DesignPattern {
                         .addModifiers(Modifier.PUBLIC,Modifier.STATIC).returns(Flyweight)
                         .addParameter(String.class,"key")
                         .addParameter(String.class,"value")
-                        .addJavadoc("""
-                                Returns Flyweight object. Just for sake of example following logic is
-                                applied, if key starts with phrase:unshared than UnsharedConcreteFlyweight
-                                object is created. Otherwise ConcreteFlyweight object is created.
-                                @param key
-                                @return Flyweight""")
+                        .addJavadoc("Returns Flyweight object. Just for sake of example following logic is\n" +
+                                    "applied, if key starts with phrase:unshared than UnsharedConcreteFlyweight\n" +
+                                    "object is created. Otherwise ConcreteFlyweight object is created.\n" +
+                                    "@param key\n" +
+                                    "@return Flyweight")
                         .beginControlFlow("if (key.startsWith(\"unshared\"))")
                         .addStatement("$N.put(key, new $T(value))",flyweights.name,UnsharedConcreteFlyweight)
                         .nextControlFlow("else { \n" +
@@ -132,6 +139,8 @@ public class Flyweight implements DesignPattern {
         generatedCode[i] = JavaFile.builder(packageName,flyweightFact)
                 .skipJavaLangImports(true)
                 .build();
+
+        logger.info("Returning generated java code to be written in files");
 
         return generatedCode;
     }
