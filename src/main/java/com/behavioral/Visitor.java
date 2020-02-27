@@ -4,13 +4,13 @@ import com.squareup.javapoet.*;
 import javax.lang.model.element.Modifier;
 import java.io.IOException;
 import com.DesignPattern;
-import org.slf4j.Logger;
+import ch.qos.logback.classic.Logger;
 import org.slf4j.LoggerFactory;
 
 public class Visitor implements DesignPattern {
 
     //Define a static logger variable so that it references the Logger instance
-    private static final Logger logger = LoggerFactory.getLogger(Visitor.class);
+    private static final Logger logger = (Logger) LoggerFactory.getLogger(Visitor.class);
 
 
     String[] defaultClasses = {"Element","ConcreteElementA","ConcreteElementB","Visitor","ConcreteVisitor1",
@@ -18,9 +18,11 @@ public class Visitor implements DesignPattern {
     String packageName = "com.BehavioralDP.visitor";
     JavaFile[] generatedCode = new JavaFile[defaultClasses.length];
 
-    public Visitor()throws IOException{
+    public Visitor(int flag)throws IOException{
         logger.info("Executing Visitor()");
-        createDesignPattern(defaultClasses,packageName);
+        if(flag == 1) {
+            createDesignPattern(defaultClasses, packageName);
+        }
     }
 
     public JavaFile[] generateCode(String[] classes, String packageName){

@@ -5,22 +5,24 @@ import com.squareup.javapoet.*;
 import javax.lang.model.element.Modifier;
 import java.io.IOException;
 import com.DesignPattern;
-import org.slf4j.Logger;
+import ch.qos.logback.classic.Logger;
 import org.slf4j.LoggerFactory;
 
 public class AbstractFactory implements DesignPattern {
 
     //Define a static logger variable so that it references the Logger instance
-    private static final Logger logger = LoggerFactory.getLogger(AbstractFactory.class);
+    private static final Logger logger = (Logger) LoggerFactory.getLogger(AbstractFactory.class);
 
     String[] defaultClasses = {"AbstractProductA","ProductA1","ProductA2","AbstractProductB","ProductB1","ProductB2",
             "AbstractFactory","ConcreteFactory1","ConcreteFactory2"};
     String packageName = "com.CreationalDP.abstractFactory";
     JavaFile[] generatedCode = new JavaFile[defaultClasses.length];
 
-    public AbstractFactory()throws IOException {
+    public AbstractFactory(int flag)throws IOException {
         logger.info("Executing AbstractFactory()");
-        createDesignPattern(defaultClasses,packageName);
+        if (flag == 1){
+            createDesignPattern(defaultClasses,packageName);
+        }
     }
 
     @Override
@@ -123,6 +125,7 @@ public class AbstractFactory implements DesignPattern {
         ClassName ConcreteFactory1 = ClassName.get("",classes[i]);
         TypeSpec concFactory1 = TypeSpec.classBuilder(ConcreteFactory1)
                 .addModifiers(Modifier.PUBLIC)
+                .addSuperinterface(AbstractFactory)
                 .addJavadoc("ConcreteFactory1, implements creation of the concrete Product1 objects")
                 .addMethod(MethodSpec.methodBuilder(createProdA.name)
                         .addModifiers(Modifier.PUBLIC)
@@ -144,6 +147,7 @@ public class AbstractFactory implements DesignPattern {
         ClassName ConcreteFactory2 = ClassName.get("",classes[i]);
         TypeSpec concFactory2 = TypeSpec.classBuilder(ConcreteFactory2)
                 .addModifiers(Modifier.PUBLIC)
+                .addSuperinterface(AbstractFactory)
                 .addJavadoc("ConcreteFactory2, implements creation of the concrete Product2 objects")
                 .addMethod(MethodSpec.methodBuilder(createProdA.name)
                         .addModifiers(Modifier.PUBLIC)

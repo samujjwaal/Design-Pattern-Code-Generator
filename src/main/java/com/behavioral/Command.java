@@ -3,24 +3,25 @@ package com.behavioral;
 import com.squareup.javapoet.*;
 import java.io.IOException;
 import com.DesignPattern;
-import org.slf4j.Logger;
+import ch.qos.logback.classic.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.lang.model.element.Modifier;
 
 public class Command implements DesignPattern {
     //Define a static logger variable so that it references the Logger instance
-    private static final Logger logger = LoggerFactory.getLogger(Command.class);
+    private static final Logger logger = (Logger) LoggerFactory.getLogger(Command.class);
 
 
     String[] defaultClasses = {"Command", "Invoker","Receiver","ConcreteCommand"};
     String packageName = "com.BehavioralDP.command";
     JavaFile[] generatedCode = new JavaFile[defaultClasses.length];
 
-    public Command()throws IOException{
+    public Command(int flag)throws IOException{
         logger.info("Executing Command()");
-        createDesignPattern(defaultClasses,packageName);
-    }
+        if(flag == 1) {
+            createDesignPattern(defaultClasses, packageName);
+        }    }
 
     public JavaFile[] generateCode(String[] classes, String packageName){
         logger.info("Executing generateCode()");

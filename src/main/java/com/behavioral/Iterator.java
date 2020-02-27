@@ -5,23 +5,24 @@ import com.squareup.javapoet.*;
 import javax.lang.model.element.Modifier;
 import java.io.IOException;
 import com.DesignPattern;
-import org.slf4j.Logger;
+import ch.qos.logback.classic.Logger;
 import org.slf4j.LoggerFactory;
 
 
 public class Iterator implements DesignPattern {
     //Define a static logger variable so that it references the Logger instance
-    private static final Logger logger = LoggerFactory.getLogger(Iterator.class);
+    private static final Logger logger = (Logger) LoggerFactory.getLogger(Iterator.class);
 
 
     String[] defaultClasses = {"Iterator", "Aggregate","ConcreteAggregate","ConcreteIterator"};
     String packageName = "com.BehavioralDP.iterator";
     JavaFile[] generatedCode = new JavaFile[defaultClasses.length];
 
-    public Iterator()throws IOException{
+    public Iterator(int flag)throws IOException{
         logger.info("Executing Iterator()");
-
-        createDesignPattern(defaultClasses,packageName);
+        if(flag == 1) {
+            createDesignPattern(defaultClasses, packageName);
+        }
     }
 
     public JavaFile[] generateCode(String[] classes, String packageName){

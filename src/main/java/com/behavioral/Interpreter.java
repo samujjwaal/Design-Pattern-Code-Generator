@@ -5,21 +5,23 @@ import com.squareup.javapoet.*;
 import javax.lang.model.element.Modifier;
 import java.io.IOException;
 import com.DesignPattern;
-import org.slf4j.Logger;
+import ch.qos.logback.classic.Logger;
 import org.slf4j.LoggerFactory;
 
 public class Interpreter implements DesignPattern {
     //Define a static logger variable so that it references the Logger instance
-    private static final Logger logger = LoggerFactory.getLogger(Interpreter.class);
+    private static final Logger logger = (Logger) LoggerFactory.getLogger(Interpreter.class);
 
 
     String[] defaultClasses = {"Context", "AbstractExpression","OrExpression","AndExpression","TerminalExpression"};
     String packageName = "com.BehavioralDP.interpreter";
     JavaFile[] generatedCode = new JavaFile[defaultClasses.length];
 
-    public Interpreter()throws IOException{
+    public Interpreter(int flag)throws IOException{
         logger.info("Executing Interpreter()");
-        createDesignPattern(defaultClasses,packageName);
+        if(flag == 1) {
+            createDesignPattern(defaultClasses, packageName);
+        }
     }
 
     public JavaFile[] generateCode(String[] classes, String packageName){

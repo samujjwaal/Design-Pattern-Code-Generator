@@ -4,24 +4,29 @@ import com.squareup.javapoet.*;
 import javax.lang.model.element.Modifier;
 import java.io.IOException;
 import com.DesignPattern;
-import org.slf4j.Logger;
+import ch.qos.logback.classic.Logger;
 import org.slf4j.LoggerFactory;
 
 public class Prototype implements DesignPattern {
 
     //Define a static logger variable so that it references the Logger instance
-    private static final Logger logger = LoggerFactory.getLogger(Prototype.class);
+    private static final Logger logger = (Logger) LoggerFactory.getLogger(Prototype.class);
 
     String[] defaultClasses = {"Prototype","ConcretePrototype","Client"};
     String packageName = "com.CreationalDP.prototype";
     JavaFile[] generatedCode = new JavaFile[defaultClasses.length];
 
-    public Prototype()throws IOException {
-        createDesignPattern(defaultClasses,packageName);
+    public Prototype(int flag)throws IOException {
+        logger.info("Executing Prototype()");
+
+        if (flag == 1) {
+            createDesignPattern(defaultClasses, packageName);
+        }
     }
 
     @Override
     public JavaFile[] generateCode(String[] classes, String packageName){
+        logger.info("Executing generateCode()");
         int i = 0;
 
 //        Prototype abstract class declaration
@@ -85,6 +90,8 @@ public class Prototype implements DesignPattern {
         generatedCode[i] = JavaFile.builder(packageName,client)
                 .skipJavaLangImports(true)
                 .build();
+
+        logger.info("Returning generated java code to be written in files");
 
         return generatedCode;
 

@@ -5,13 +5,13 @@ import com.squareup.javapoet.*;
 import javax.lang.model.element.Modifier;
 import java.io.IOException;
 import com.DesignPattern;
-import org.slf4j.Logger;
+import ch.qos.logback.classic.Logger;
 import org.slf4j.LoggerFactory;
 
 public class Adapter implements DesignPattern {
 
     //Define a static logger variable so that it references the Logger instance
-    private static final Logger logger = LoggerFactory.getLogger(Adapter.class);
+    private static final Logger logger = (Logger) LoggerFactory.getLogger(Adapter.class);
 
 
     String[] defaultClasses = {"Target", "Adaptee","Adapter"};
@@ -19,9 +19,11 @@ public class Adapter implements DesignPattern {
     JavaFile[] generatedCode = new JavaFile[defaultClasses.length];
 
 
-    public Adapter()throws IOException{
+    public Adapter(int flag)throws IOException{
         logger.info("Executing Adapter()");
-        createDesignPattern(defaultClasses,packageName);
+        if(flag == 1) {
+            createDesignPattern(defaultClasses, packageName);
+        }
     }
 
     public JavaFile[] generateCode(String[] classes, String packageName){

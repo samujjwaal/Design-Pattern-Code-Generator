@@ -5,22 +5,24 @@ import com.squareup.javapoet.*;
 import javax.lang.model.element.Modifier;
 import java.io.IOException;
 import com.DesignPattern;
-import org.slf4j.Logger;
+import ch.qos.logback.classic.Logger;
 import org.slf4j.LoggerFactory;
 
 public class TemplateMethod implements DesignPattern {
 
     //Define a static logger variable so that it references the Logger instance
-    private static final Logger logger = LoggerFactory.getLogger(TemplateMethod.class);
+    private static final Logger logger = (Logger) LoggerFactory.getLogger(TemplateMethod.class);
 
 
     String[] defaultClasses = {"AbstractClass", "ConcreteClass"};
     String packageName = "com.BehavioralDP.templateMethod";
     JavaFile[] generatedCode = new JavaFile[defaultClasses.length];
 
-    public TemplateMethod()throws IOException{
+    public TemplateMethod(int flag)throws IOException{
         logger.info("Executing TemplateMethod()");
-        createDesignPattern(defaultClasses,packageName);
+        if(flag == 1) {
+            createDesignPattern(defaultClasses, packageName);
+        }
     }
 
     public JavaFile[] generateCode(String[] classes, String packageName){

@@ -11,8 +11,11 @@ public class ChainOfResponsibility implements DesignPattern {
     String packageName = "com.BehavioralDP.chainOfResponsibility";
     JavaFile[] generatedCode = new JavaFile[defaultClasses.length];
 
-    public ChainOfResponsibility()throws IOException{
-        createDesignPattern(defaultClasses,packageName);
+    public ChainOfResponsibility(int flag)throws IOException{
+        logger.info("Executing ChainOfResponsibility()");
+        if(flag == 1) {
+            createDesignPattern(defaultClasses, packageName);
+        }
     }
 
     public JavaFile[] generateCode(String[] classes, String packageName){
