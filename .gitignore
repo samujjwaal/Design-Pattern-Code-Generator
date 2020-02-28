@@ -134,5 +134,6 @@ project/plugins/project/
 outputs/
 .idea
 target/streams
-target/scala-2.13
+project/project
+project/target
 !target/scala-2.13/hw1-assembly-0.1.jar
