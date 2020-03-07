@@ -1,6 +1,8 @@
 ## Object-oriented design and implementation of a Design Pattern Code Generator.
 This project is the implementation of a program that generates the implementation code of the 23 Gang of Four(GoF) design patterns, as presented in the book “Design Patterns: Elements of Reusable Object-Oriented Software”. 
 
+------
+
 ## Index
 
 1. About Design Patterns
@@ -44,6 +46,8 @@ The 23 Design Patterns are classified into 3 main categories:
   * Strategy
   * Template
   * Visitor
+
+------
 
 #### 2. About JavaPoet
 
@@ -89,6 +93,8 @@ javaFile.writeTo(System.out);
 JavaPoet offers models for classes & interfaces (`TypeSpec`), fields (`FieldSpec`), methods & constructors (`MethodSpec`), parameters (`ParameterSpec`) and annotations (`AnnotationSpec`). It also generates the package folder structure for the output java source files.
 
 The most recent version of JavaPoet available as of now is 1.12.1.
+
+------
 
 #### 3. Application Design
 
@@ -244,6 +250,14 @@ public class DePaCoG {
   * Sometimes singleton pattern can hide bad code design
   * It requires modifications to be used in a multi threaded environment to make sure multiple instances are not created by multiple threads
 
+------
+
+The image below shows a class diagram for the complete application. For simplicity I have selected only 3 design pattern classes (each representing its category of design patterns) out of the 23.
+
+![](C:\Users\Samujjwaal Dey\Desktop\CS 474 OOLE\homework1\screenshots\DePaCoG.png)
+
+The class `DePaCoG` has the main() method in it. It creates an instance of class `Hw1DesignPatternGenerator` (concrete implementation of `DesignPatternGenerator` ). Methods here are for displaying menu of design patterns and getting choice of design pattern from user. Depending on user’s choice the corresponding design pattern generating class (implementation of ``DesignPattern`) is instantiated to generate the design pattern source code. 
+
 
 
 #### 4. Test Cases
@@ -256,7 +270,7 @@ There are 2 test classes `DesignPatternTest` and `Hw1DesignPatternGeneratorTest`
 * Test Case to verify  `generateCode()` returns `JavaFile[]` object
 * Test Case to verify the generated java files are written successfully in the output folder.
 
-
+------
 
 #### 5. Instructions to Execute
 
@@ -270,21 +284,27 @@ For command line execution, locate `hw1-assembly-0.1.jar` at `target\scala-2.13`
 
 On Windows, the command to run the jar file: `java -jar hw1-assembly-0.1.jar mode`
 
-* Executing using default config file, mode = 0: 
+* Executing using default config file, then `mode = 0`: 
+
   * run `java -jar hw1-assembly-0.1.jar 0`
 
-* Executing using custom inputs from user, mode = 1: 
+  ![](C:\Users\Samujjwaal Dey\Desktop\CS 474 OOLE\homework1\screenshots\Capture4.PNG)
+
+* Executing using custom inputs from user, then `mode = 1`: 
+
   * run `java -jar hw1-assembly-0.1.jar 1`
+
+  ![](C:\Users\Samujjwaal Dey\Desktop\CS 474 OOLE\homework1\screenshots\Capture2.PNG)
 
 For execution in IntelliJ, use `run 0` or `run 1` for the preferred way of execution (argument passed has similar purpose like in the command line method) 
 
 The output java files are saved under the package name provided in the config file (or as custom input) in a folder named `outputs`. The `outputs` folder is created in the current working directory during execution.
 
-
+------
 
 #### 6. Results of Execution
 
-While executing the Design Pattern Code Generator, the main() method in class DePaCoG is executed along with a command line argument (0 or 1). The command line argument is to select whether inputs will be entered via a configuration file or via inputs through the interactive environment.
+While executing the Design Pattern Code Generator, the main() method in class `DePaCoG` is executed along with a command line argument (`0` or `1`). The command line argument is to select whether inputs will be entered via a configuration file or via inputs through the interactive environment.
 
 Here is an example of config values to create Abstract Factory design pattern.
 
@@ -298,9 +318,17 @@ Here is an example of config values to create Abstract Factory design pattern.
 }
 ```
 
+For above config input, the output files will be saved at `outputs/com/laptopAbstractFactory`.
+
+The classes created are : `Processor.java, Intel.java, AMD.java, OperatingSystem.java, OS.java, ChromeOS.java, Ubuntu.java, LaptopFactory.java, ChromeBookFactory.java,LinuxLaptopFactory.java`
+
+The image below shows the class diagram of the classes generated after executing the config input values.
+
+![](C:\Users\Samujjwaal Dey\Desktop\CS 474 OOLE\homework1\screenshots\laptopFactory.png)
+
 In addition to Abstract Factory, the `default.conf` configuration file also contains inputs for Decorator, Adapter and Observer design patterns.
 
-For instance in above config input, the output files will be saved at `outputs/com/laptopAbstractFactory`. The `outputs` folder is created in the current working directory during execution.
+The `outputs` folder is created in the current working directory during execution.
 
-The classes created are : Processor.java, Intel.java, AMD.java, OperatingSystem.java, OS.java, ChromeOS.java, Ubuntu.java, LaptopFactory.java, ChromeBookFactory.java,LinuxLaptopFactory.java
+<img src="C:\Users\Samujjwaal Dey\Desktop\CS 474 OOLE\homework1\screenshots\Capture.PNG" style="zoom:75%;" />
 
