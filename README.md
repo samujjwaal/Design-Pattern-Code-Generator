@@ -254,7 +254,7 @@ public class DePaCoG {
 
 The image below shows a class diagram for the complete application. For simplicity I have selected only 3 design pattern classes (each representing its category of design patterns) out of the 23.
 
-![](C:\Users\Samujjwaal Dey\Desktop\CS 474 OOLE\homework1\screenshots\DePaCoG.png)
+![](screenshots/DePaCoG.png)
 
 The class `DePaCoG` has the main() method in it. It creates an instance of class `Hw1DesignPatternGenerator` (concrete implementation of `DesignPatternGenerator` ). Methods here are for displaying menu of design patterns and getting choice of design pattern from user. Depending on user’s choice the corresponding design pattern generating class (implementation of ``DesignPattern`) is instantiated to generate the design pattern source code. 
 
@@ -288,13 +288,13 @@ On Windows, the command to run the jar file: `java -jar hw1-assembly-0.1.jar mod
 
   * run `java -jar hw1-assembly-0.1.jar 0`
 
-  ![](C:\Users\Samujjwaal Dey\Desktop\CS 474 OOLE\homework1\screenshots\Capture4.PNG)
+  ![](screenshots/Capture4.PNG)
 
 * Executing using custom inputs from user, then `mode = 1`: 
 
   * run `java -jar hw1-assembly-0.1.jar 1`
 
-  ![](C:\Users\Samujjwaal Dey\Desktop\CS 474 OOLE\homework1\screenshots\Capture2.PNG)
+  ![](screenshots/Capture2.PNG)
 
 For execution in IntelliJ, use `run 0` or `run 1` for the preferred way of execution (argument passed has similar purpose like in the command line method) 
 
@@ -324,11 +324,11 @@ The classes created are : `Processor.java, Intel.java, AMD.java, OperatingSystem
 
 The image below shows the class diagram of the classes generated after executing the config input values.
 
-![](C:\Users\Samujjwaal Dey\Desktop\CS 474 OOLE\homework1\screenshots\laptopFactory.png)
+![](screenshots/laptopFactory.png)
 
 In addition to Abstract Factory, the `default.conf` configuration file also contains inputs for Decorator, Adapter and Observer design patterns.
 
 The `outputs` folder is created in the current working directory during execution.
 
-<img src="C:\Users\Samujjwaal Dey\Desktop\CS 474 OOLE\homework1\screenshots\Capture.PNG" style="zoom:75%;" />
+<img src="screenshots/Capture.PNG" style="zoom:75%;" />
 
