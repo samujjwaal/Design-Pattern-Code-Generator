@@ -1,20 +1,21 @@
-## Object-oriented design and implementation of a Design Pattern Code Generator.
-This project is the implementation of a program that generates the implementation code of the 23 Gang of Four(GoF) design patterns, as presented in the book “Design Patterns: Elements of Reusable Object-Oriented Software”. 
+# Design Pattern Code Generator
+This project is to generate the implementation code of the 23 Gang of Four(GoF) design patterns, as presented in the book “Design Patterns: Elements of Reusable Object-Oriented Software”. 
 
-------
+An [Intellij Plugin](https://github.com/samujjwaal/IntelliJ-DP-Generator-Plugin) to generate design pattern code based on this implementation. 
+
 
 ## Index
 
-1. About Design Patterns
-2. About JavaPoet
-3. Application Design
-4. Test Cases
-5. Instructions to Execute
-6. Results of Execution
+1. [About Design Patterns](#1-about-design-patterns)
+2. [About JavaPoet](#2-about-javapoet)
+3. [Application Design](#3-application-design)
+4. [Test Cases](#4-test-cases)
+5. I[nstructions to Execute](#5-instructions-to-execute)
+6. [Results of Execution](#6-results-of-execution)
 
 ------
 
-#### 1. About Design Patterns
+### 1. About Design Patterns
 
 Design patterns are the best practices that a programmer can employ to solve trivial problems while designing an application. Design patterns help in speeding up the development process as they provide a set of time tested, proven development paradigms. They provide an industry standard approach to solve a recurring problem. Using design patterns promotes reusability that leads to more robust and highly maintainable code.
 
@@ -49,7 +50,7 @@ The 23 Design Patterns are classified into 3 main categories:
 
 ------
 
-#### 2. About JavaPoet
+### 2. About JavaPoet
 
 [JavaPoet](https://github.com/square/javapoet), a successor to [JavaWriter](https://github.com/square/javapoet/tree/javawriter_2), is a Java API for generating .java source files. It can generate primitive types, reference types (like classes, interfaces, enumerated types, anonymous inner classes), fields, methods, parameters, annotations, and Javadocs. 
 
@@ -96,7 +97,7 @@ The most recent version of JavaPoet available as of now is 1.12.1.
 
 ------
 
-#### 3. Application Design
+### 3. Application Design
 
 To implement Design Pattern Code Generator(DePaCoG), I have employed the **Factory Method**, **Template Method** and **Singleton** design patterns.
 
@@ -256,11 +257,11 @@ The image below shows a class diagram for the complete application. For simplici
 
 ![](screenshots/DePaCoG.png)
 
-The class `DePaCoG` has the main() method in it. It creates an instance of class `Hw1DesignPatternGenerator` (concrete implementation of `DesignPatternGenerator` ). Methods here are for displaying menu of design patterns and getting choice of design pattern from user. Depending on user’s choice the corresponding design pattern generating class (implementation of ``DesignPattern`) is instantiated to generate the design pattern source code. 
+The class `DePaCoG` has the main() method in it. It creates an instance of class `Hw1DesignPatternGenerator` (concrete implementation of `DesignPatternGenerator` ). Methods here are for displaying menu of design patterns and getting choice of design pattern from user. Depending on user’s choice the corresponding design pattern generating class (implementation of `DesignPattern`) is instantiated to generate the design pattern source code. 
 
+------
 
-
-#### 4. Test Cases
+### 4. Test Cases
 
 There are 2 test classes `DesignPatternTest` and `Hw1DesignPatternGeneratorTest`, with a total of 5 test cases.
 
@@ -272,9 +273,9 @@ There are 2 test classes `DesignPatternTest` and `Hw1DesignPatternGeneratorTest`
 
 ------
 
-#### 5. Instructions to Execute
+### 5. Instructions to Execute
 
-First clone the repository from Bitbucket.
+First clone the repository from GitHub.
 
 Execution can be in two modes, using default config file or using interactive environment/menu to get custom inputs from user.
 
@@ -302,7 +303,7 @@ The output java files are saved under the package name provided in the config fi
 
 ------
 
-#### 6. Results of Execution
+### 6. Results of Execution
 
 While executing the Design Pattern Code Generator, the main() method in class `DePaCoG` is executed along with a command line argument (`0` or `1`). The command line argument is to select whether inputs will be entered via a configuration file or via inputs through the interactive environment.
 
